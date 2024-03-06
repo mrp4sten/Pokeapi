@@ -1,4 +1,4 @@
-const express = require('express')
+import express from "express"
 const app = express()
 
 app.post('/team/pokemons', (req, res) => {
