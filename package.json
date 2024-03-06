@@ -4,8 +4,9 @@
   "description": "Pokeapi to complete Mastermind course",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/mocha"
   },
+  "type": "module",
   "author": "Mauricio Pasten (mrp4sten)",
   "license": "ISC",
   "dependencies": {
