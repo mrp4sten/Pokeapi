@@ -6,18 +6,12 @@ import app from '../index.js'
 use(superagent());
 
 describe('Test suite for auth', () => {
-    it('should return 403', (done) => {
-        request(app)
-            .get('/team')
-            .end((err, res) => {
-                assert.equal(res.statusCode, 403)
-            });
-    });
     it('should return 401', (done) => {
         request(app)
             .get('/team')
             .end((err, res) => {
                 assert.equal(res.statusCode, 401)
+                done()
             });
     });
     it('should return 200', (done) => {
@@ -26,9 +20,10 @@ describe('Test suite for auth', () => {
             .end((err, res) => {
                 request(app)
                     .get('/team')
-                    .set('Áuthorization', `JWT ${res.body.token}`)
+                    .set('Authorization', `JWT ${res.body.token}`)
                     .end((err, res) => {
                         assert.equal(res.statusCode, 200)
+                        done()
                     });
             });
     });
