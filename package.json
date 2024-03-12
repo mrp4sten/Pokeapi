@@ -10,10 +10,13 @@
   "author": "Mauricio Pasten (mrp4sten)",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.2",
     "express": "^4.18.3",
     "jsonwebtoken": "^9.0.2",
     "passport": "^0.7.0",
-    "passport-jwt": "^4.0.1"
+    "passport-jwt": "^4.0.1",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "chai": "^5.1.0",
