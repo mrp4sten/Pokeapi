@@ -8,7 +8,7 @@ use(superagent());
 describe('Test suite for auth', () => {
     it('should return 401 when no jwt token available', (done) => {
         request(app)
-            .get('/team')
+            .get('/teams')
             .end((err, res) => {
                 assert.equal(res.statusCode, 401)
                 done()
@@ -41,7 +41,7 @@ describe('Test suite for auth', () => {
             .end((err, res) => {
                 assert.equal(res.statusCode, 200)
                 request(app)
-                    .get('/team')
+                    .get('/teams')
                     .set('Authorization', `JWT ${res.body.token}`)
                     .end((err, res) => {
                         assert.equal(res.statusCode, 200)
