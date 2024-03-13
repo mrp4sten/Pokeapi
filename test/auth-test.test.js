@@ -17,7 +17,7 @@ describe('Test suite for auth', () => {
     })
     it('should return 400 when data is not provided', (done) => {
         request(app)
-            .post('/login')
+            .post('/auth/login')
             .end((err, res) => {
                 assert.equal(res.statusCode, 400)
                 done()
@@ -25,7 +25,7 @@ describe('Test suite for auth', () => {
     });
     it('should return 200 and token for succesfull login', (done) => {
         request(app)
-            .post('/login')
+            .post('/auth/login')
             .set('Content-Type', 'application/json')
             .send({ username: 'mrp4sten', password: '1234' })
             .end((err, res) => {
@@ -35,7 +35,7 @@ describe('Test suite for auth', () => {
     });
     it('should return 200 when jwt is valid', (done) => {
         request(app)
-            .post('/login')
+            .post('/auth/login')
             .set('Content-Type', 'application/json')
             .send({ username: 'mrp4sten', password: '1234' })
             .end((err, res) => {
