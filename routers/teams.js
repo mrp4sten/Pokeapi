@@ -1,15 +1,23 @@
 import express from 'express'
 import passport from "passport"
 import auth from "../auth.js"
+import { getTeam, setTeam } from '../controllers/teams.js'
+import { getUser } from '../controllers/users.js'
 const teamsRouter = express.Router()
 auth(passport)
 
+
+
 teamsRouter.route('/')
-  .get(passport.authenticate('jwt', { session: false }), (req, res) => {
-    res.status(200).send('Hello World')
+  .get(passport.authenticate('jwt', { session: false }), (req, res, next) => {
+    let user = getUser(req.user.userId)
+    res.status(200).json({
+      trainer: user.username,
+      team: getTeam(req.user.userId)
+    })
   })
   .put((req, res) => {
-    res.send('Hello World')
+    setTeam(req.body.userId, req.body.team)
   })
 
 teamsRouter.route('/pokemons')

@@ -1,17 +1,26 @@
 import { v4 as uuidv4 } from 'uuid';
 import { hashPasswordSync, unHashPassword } from '../crypto.js';
+import { bootstrapTeam } from './teams.js';
 
 const userDatabase = {}
 
 export const addUser = (username, password) => {
   const hashedPassword = hashPasswordSync(password)
-  userDatabase[uuidv4()] = { username, password: hashedPassword }
+  let userId = uuidv4()
+  userDatabase[userId] = { username, password: hashedPassword }
+  bootstrapTeam(userId)
 }
 
-const getUserIdFromUserName = (userName) => {
-  for(let user in userDatabase) {
-    if(userDatabase[user].username === userName) {
-      return userDatabase[user]
+export const getUser = (userId) => {
+  return userDatabase[userId]
+}
+
+export const getUserIdFromUserName = (userName) => {
+  for (let user in userDatabase) {
+    if (userDatabase[user].username === userName) {
+      let userData = userDatabase[user]
+      userData.userId = user
+      return userData
     }
   }
 }

@@ -1,6 +1,6 @@
 import express from "express"
 import jsonwebtoken from "jsonwebtoken"
-import { addUser, verifyUserCredentials } from "../controllers/users.js"
+import { addUser, getUserIdFromUserName, verifyUserCredentials } from "../controllers/users.js"
 const authRouter = express.Router()
 
 addUser('mrp4sten', '1234')
@@ -22,7 +22,8 @@ authRouter.route('/login')
       }
 
       const { sign } = jsonwebtoken
-      const token = sign({ userId: result }, 'your_jwt_secret')
+      let user = getUserIdFromUserName(req.body.username)
+      const token = sign({ userId: user.userId }, 'your_jwt_secret')
 
       res.status(200).json({ token: token })
     })

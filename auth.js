@@ -9,7 +9,6 @@ const auth = (passport) => {
   }
 
   passport.use(new Strategy(options, (decoded, done) => {
-    console.log('decoded jwt', decoded)
     return done(null, decoded)
   }))
 }
