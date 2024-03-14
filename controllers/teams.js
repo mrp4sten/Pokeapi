@@ -1,10 +1,7 @@
 const teamsDatabase = {}
 
 export const bootstrapTeam = (uuid) => {
-  teamsDatabase[uuid] = [
-    { name: 'Charizard' },
-    { name: 'Blastoise' }
-  ]
+  teamsDatabase[uuid] = []
 }
 
 export const addPokemon = (uuid, pokemonName) => {
