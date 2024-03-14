@@ -7,6 +7,7 @@ use(superagent());
 
 describe('Test suite for teams', () => {
   it('should return team of given user', (done) => {
+    let team = [{ name: 'Charizard' }, { name: 'Blastoise' }]
     request(app)
       .post('/auth/login')
       .set('Content-Type', 'application/json')
@@ -19,7 +20,7 @@ describe('Test suite for teams', () => {
         assert.equal(res.statusCode, 200)
         request(app)
           .put('/teams')
-          .send({ team: [{ name: 'Charizard' }, { name: 'Blastoise' }] })
+          .send({ team })
           .set('Authorization', `JWT ${jwt}`)
           .end((err, res) => {
             request(app)
@@ -29,8 +30,8 @@ describe('Test suite for teams', () => {
                 assert.equal(res.statusCode, 200)
                 assert.equal(res.body.trainer, 'mrp4sten')
                 assert.equal(res.body.team.length, 2)
-                assert.equal(res.body.team[0].name, 'Charizard')
-                assert.equal(res.body.team[1].name, 'Blastoise')
+                assert.equal(res.body.team[0].name, team[0].name)
+                assert.equal(res.body.team[1].name, team[1].name)
                 done()
               });
           });
