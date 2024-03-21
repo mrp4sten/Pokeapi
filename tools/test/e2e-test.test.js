@@ -1,7 +1,7 @@
 import { assert, use } from 'chai';
 import superagent from 'chai-superagent';
 import request from 'supertest';
-import app from '../../index.js';
+import app from '../../app.js';
 
 use(superagent());
 

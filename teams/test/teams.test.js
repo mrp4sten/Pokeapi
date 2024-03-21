@@ -1,8 +1,8 @@
 import { assert, use } from 'chai';
 import superagent from 'chai-superagent';
 import request from 'supertest';
+import app from '../../app.js';
 import { addUser, cleanUpUsers } from '../../auth/users.controller.js';
-import app from '../../index.js';
 import { cleanUpTeams } from '../teams.controller.js';
 
 use(superagent());

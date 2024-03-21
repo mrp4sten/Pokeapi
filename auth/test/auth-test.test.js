@@ -2,7 +2,7 @@ import { assert, use } from 'chai';
 import superagent from 'chai-superagent';
 import { before } from 'mocha';
 import request from 'supertest';
-import app from '../../index.js';
+import app from '../../app.js';
 import { addUser, cleanUpUsers } from '../users.controller.js';
 
 use(superagent());
