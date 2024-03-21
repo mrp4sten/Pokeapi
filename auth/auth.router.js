@@ -1,6 +1,6 @@
 import express from "express"
 import jsonwebtoken from "jsonwebtoken"
-import { getUserIdFromUserName, verifyUserCredentials } from "../controllers/users.js"
+import { getUserIdFromUserName, verifyUserCredentials } from "./users.controller.js"
 const authRouter = express.Router()
 
 authRouter.route('/')

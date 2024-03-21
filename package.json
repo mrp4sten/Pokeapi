@@ -4,7 +4,7 @@
   "description": "Pokeapi to complete Mastermind course",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha **/**/*.test.js"
   },
   "type": "module",
   "author": "Mauricio Pasten (mrp4sten)",

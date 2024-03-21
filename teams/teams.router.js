@@ -1,9 +1,9 @@
 import axios from 'axios'
 import express from 'express'
 import passport from "passport"
-import auth from "../auth.js"
-import { addPokemon, getTeam, removePokemon, setTeam } from '../controllers/teams.js'
-import { getUser } from '../controllers/users.js'
+import { getUser } from '../auth/users.controller.js'
+import auth from "../tools/auth.js"
+import { addPokemon, getTeam, removePokemon, setTeam } from './teams.controller.js'
 const teamsRouter = express.Router()
 auth(passport)
 

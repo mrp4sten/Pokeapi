@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
-import { hashPasswordSync, unHashPassword } from '../crypto.js';
-import { bootstrapTeam } from './teams.js';
+import { bootstrapTeam } from '../teams/teams.controller.js';
+import { hashPasswordSync, unHashPassword } from '../tools/crypto.js';
 
 let userDatabase = {}
 
