@@ -37,4 +37,35 @@ describe('Test suite for teams', () => {
           });
       })
   })
+  it('should return the pokedex number', (done) => {
+    let pokemonName = 'Bulbasaur'
+    request(app)
+      .post('/auth/login')
+      .set('Content-Type', 'application/json')
+      .send({ username: 'mrp4sten2', password: '1234' })
+      .end((err, res) => {
+
+        let jwt = res.body.token
+
+        // Expect valid login
+        assert.equal(res.statusCode, 200)
+        request(app)
+          .post('/teams/pokemons')
+          .send({ name: pokemonName })
+          .set('Authorization', `JWT ${jwt}`)
+          .end((err, res) => {
+            request(app)
+              .get('/teams')
+              .set('Authorization', `JWT ${jwt}`)
+              .end((err, res) => {
+                assert.equal(res.statusCode, 200)
+                assert.equal(res.body.trainer, 'mrp4sten2')
+                assert.equal(res.body.team.length, 1)
+                assert.equal(res.body.team[0].name, pokemonName)
+                assert.equal(res.body.team[0].pokedexNumber, 1)
+                done()
+              });
+          });
+      })
+  })
 })

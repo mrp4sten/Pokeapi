@@ -4,6 +4,7 @@ import { addUser, getUserIdFromUserName, verifyUserCredentials } from "../contro
 const authRouter = express.Router()
 
 addUser('mrp4sten', '1234')
+addUser('mrp4sten2', '1234')
 
 authRouter.route('/')
   .get((req, res) => {

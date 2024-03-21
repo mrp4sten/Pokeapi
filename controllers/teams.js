@@ -4,8 +4,8 @@ export const bootstrapTeam = (uuid) => {
   teamsDatabase[uuid] = []
 }
 
-export const addPokemon = (uuid, pokemonName) => {
-  teamsDatabase[uuid].push({ name: pokemonName })
+export const addPokemon = (uuid, pokemon) => {
+  teamsDatabase[uuid].push(pokemon)
 }
 
 export const setTeam = (uuid, team) => {
