@@ -1,9 +1,16 @@
 import { assert, use } from 'chai';
 import superagent from 'chai-superagent';
+import { before } from 'mocha';
 import request from 'supertest';
+import { addUser, cleanUpUsers } from '../controllers/users.js';
 import app from '../index.js';
 
 use(superagent());
+
+before((done) => {
+    addUser('mrp4sten', '1234')
+    done()
+})
 
 describe('Test suite for auth', () => {
     it('should return 401 when no jwt token available', (done) => {
@@ -50,3 +57,8 @@ describe('Test suite for auth', () => {
             })
     })
 });
+
+after((done) => {
+    cleanUpUsers()
+    done()
+})

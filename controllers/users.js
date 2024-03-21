@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { hashPasswordSync, unHashPassword } from '../crypto.js';
 import { bootstrapTeam } from './teams.js';
 
-const userDatabase = {}
+let userDatabase = {}
 
 export const addUser = (username, password) => {
   const hashedPassword = hashPasswordSync(password)
@@ -34,4 +34,8 @@ export const verifyUserCredentials = (username, password, done) => {
     done('Missing user')
   }
 
+}
+
+export const cleanUpUsers = () => {
+  userDatabase = {}
 }

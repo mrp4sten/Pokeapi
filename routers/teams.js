@@ -2,7 +2,7 @@ import axios from 'axios'
 import express from 'express'
 import passport from "passport"
 import auth from "../auth.js"
-import { addPokemon, getTeam, setTeam } from '../controllers/teams.js'
+import { addPokemon, getTeam, removePokemon, setTeam } from '../controllers/teams.js'
 import { getUser } from '../controllers/users.js'
 const teamsRouter = express.Router()
 auth(passport)
@@ -37,8 +37,11 @@ teamsRouter.route('/pokemons')
         res.status(400).json({ message: error })
       })
   })
-  .delete((req, res) => {
-    res.send('Hello World')
-  })
+
+  teamsRouter.route('/pokemons/:pokeId')
+    .delete(passport.authenticate('jwt', { session: false }), (req, res, next) =>  {
+      removePokemon(req.user.userId, req.params.pokeId)
+      res.status(200).send()
+    })
 
 export default teamsRouter
