@@ -5,28 +5,35 @@ import { hashPasswordSync, unHashPassword } from '../tools/crypto.js';
 let userDatabase = {}
 
 export const addUser = (username, password) => {
-  const hashedPassword = hashPasswordSync(password)
-  let userId = uuidv4()
-  userDatabase[userId] = { username, password: hashedPassword }
-  bootstrapTeam(userId)
+  return new Promise((resolve, reject) => {
+    const hashedPassword = hashPasswordSync(password)
+    let userId = uuidv4()
+    userDatabase[userId] = { username, password: hashedPassword }
+    bootstrapTeam(userId)
+    resolve()
+  })
 }
 
 export const getUser = (userId) => {
-  return userDatabase[userId]
+  return new Promise((resolve, reject) => {
+    resolve(userDatabase[userId])
+  })
 }
 
 export const getUserIdFromUserName = (userName) => {
-  for (let user in userDatabase) {
-    if (userDatabase[user].username === userName) {
-      let userData = userDatabase[user]
-      userData.userId = user
-      return userData
+  return new Promise((resolve, reject) => {
+    for (let user in userDatabase) {
+      if (userDatabase[user].username === userName) {
+        let userData = userDatabase[user]
+        userData.userId = user
+        resolve(userData)
+      }
     }
-  }
+  })
 }
 
-export const verifyUserCredentials = (username, password, done) => {
-  let user = getUserIdFromUserName(username)
+export const verifyUserCredentials = async (username, password, done) => {
+  let user = await getUserIdFromUserName(username)
 
   if (user) {
     unHashPassword(password, user.password, done)
@@ -37,5 +44,8 @@ export const verifyUserCredentials = (username, password, done) => {
 }
 
 export const cleanUpUsers = () => {
-  userDatabase = {}
+  return new Promise((resolve, reject) => {
+    userDatabase = {}
+    resolve()
+  })
 }

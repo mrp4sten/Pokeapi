@@ -8,14 +8,12 @@ import { cleanUpTeams } from '../teams.controller.js';
 use(superagent());
 
 
-before((done) => {
-  addUser('mrp4sten', '1234')
-  done()
+before( async () => {
+  await addUser('mrp4sten', '1234')
 })
 
-afterEach((done) => {
-  cleanUpTeams()
-  done()
+afterEach(async () => {
+  await cleanUpTeams()
 })
 
 describe('Test suite for teams', () => {
@@ -115,7 +113,6 @@ describe('Test suite for teams', () => {
   })
 })
 
-after((done) => {
-  cleanUpUsers()
-  done()
+after(async () => {
+  await cleanUpUsers()
 })
