@@ -1,41 +1,36 @@
 import { v4 as uuidv4 } from 'uuid';
 import { bootstrapTeam } from '../teams/teams.controller.js';
 import { hashPasswordSync, unHashPassword } from '../tools/crypto.js';
+import { UserModel } from './user.model.js';
 
 let userDatabase = {}
 
-export const addUser = (username, password) => {
-  const asyncTask = async () => {
-    const hashedPassword = hashPasswordSync(password);
-    let userId = uuidv4();
-    userDatabase[userId] = { username, password: hashedPassword };
-    await bootstrapTeam(userId);
-  };
-
-  return new Promise((resolve, reject) => {
-    asyncTask()
-      .then(resolve)
-      .catch(reject);
+export const addUser = (username, password) => new Promise((resolve, reject) => {
+  const hashedPassword = hashPasswordSync(password);
+  let userId = uuidv4();
+  const newUser = new UserModel({
+    userId,
+    username,
+    password: hashedPassword
   });
-};
 
-export const getUser = (userId) => {
-  return new Promise((resolve, reject) => {
-    resolve(userDatabase[userId])
-  })
-}
+  newUser.save()
+    .then(() => bootstrapTeam(userId))
+    .then(() => resolve())
+    .catch(err => reject(err));
+});
 
-export const getUserIdFromUserName = (userName) => {
-  return new Promise((resolve, reject) => {
-    for (let user in userDatabase) {
-      if (userDatabase[user].username === userName) {
-        let userData = userDatabase[user]
-        userData.userId = user
-        resolve(userData)
-      }
-    }
-  })
-}
+export const getUser = (userId) => new Promise((resolve, reject) => {
+  UserModel.findOne({ userId }).exec()
+    .then(result => resolve(result))
+    .catch(err => reject(err));
+});
+
+export const getUserIdFromUserName = (userName) => new Promise((resolve, reject) => {
+  UserModel.findOne({ username: userName }).exec()
+    .then(result => resolve(result))
+    .catch(err => reject(err));
+});
 
 export const verifyUserCredentials = async (username, password, done) => {
   let user = await getUserIdFromUserName(username)
@@ -48,9 +43,8 @@ export const verifyUserCredentials = async (username, password, done) => {
 
 }
 
-export const cleanUpUsers = () => {
-  return new Promise((resolve, reject) => {
-    userDatabase = {}
-    resolve()
-  })
-}
+export const cleanUpUsers = () => new Promise((resolve, reject) => {
+  UserModel.deleteMany({}).exec()
+    .then(result => resolve(result))
+    .catch(err => reject(err));
+});

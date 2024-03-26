@@ -1,9 +1,12 @@
 import express from "express"
 import authRouter from "./auth/auth.router.js"
 import teamsRouter from "./teams/teams.router.js"
+import { connectToDatabase } from "./tools/database.js"
 import { setupMiddlewares } from "./tools/middlewares.js"
 
 const app = express()
+
+connectToDatabase()
 
 setupMiddlewares(app)
 app.get('/', (req, res) => {
