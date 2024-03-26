@@ -5,14 +5,19 @@ import { hashPasswordSync, unHashPassword } from '../tools/crypto.js';
 let userDatabase = {}
 
 export const addUser = (username, password) => {
+  const asyncTask = async () => {
+    const hashedPassword = hashPasswordSync(password);
+    let userId = uuidv4();
+    userDatabase[userId] = { username, password: hashedPassword };
+    await bootstrapTeam(userId);
+  };
+
   return new Promise((resolve, reject) => {
-    const hashedPassword = hashPasswordSync(password)
-    let userId = uuidv4()
-    userDatabase[userId] = { username, password: hashedPassword }
-    bootstrapTeam(userId)
-    resolve()
-  })
-}
+    asyncTask()
+      .then(resolve)
+      .catch(reject);
+  });
+};
 
 export const getUser = (userId) => {
   return new Promise((resolve, reject) => {

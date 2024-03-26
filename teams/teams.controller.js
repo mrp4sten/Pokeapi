@@ -1,7 +1,10 @@
 let teamsDatabase = {}
 
 export const bootstrapTeam = (uuid) => {
-  teamsDatabase[uuid] = []
+  new Promise((resolve, reject) => {
+    teamsDatabase[uuid] = []
+    resolve()
+  })
 }
 
 export const addPokemon = (uuid, pokemon) => {
