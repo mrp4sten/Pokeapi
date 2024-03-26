@@ -10,6 +10,10 @@ const user = {
 
 const db = process.env.ENV === 'development' ? 'TestDB' : process.env.DB_NAME;
 
+/**
+ * Connect to the database
+ * @returns {Promise<void>}
+ */
 export const connectToDatabase = () => {
   return mongoose.connect(`mongodb+srv://${user.username}:${user.password}@cluster0.yooagvb.mongodb.net/${db}?retryWrites=true&w=majority`, {
     useNewUrlParser: true,

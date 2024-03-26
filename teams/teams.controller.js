@@ -1,7 +1,9 @@
 import { TeamModel } from "./teams.model.js"
 
-let teamsDatabase = {}
-
+/**
+ * Bootstrap a new team for a user
+ * @param {*} uuid
+ */
 export const bootstrapTeam = (uuid) => {
   new Promise((resolve, reject) => {
     const newTeam = new TeamModel({
@@ -15,6 +17,11 @@ export const bootstrapTeam = (uuid) => {
   })
 }
 
+/**
+ * Add a pokemon to the team of the user
+ * @param {*} uuid
+ * @param {*} pokemon
+ */
 export const addPokemon = (uuid, pokemon) => {
   return new Promise((resolve, reject) => {
     TeamModel.findOne({ userId: uuid }).exec()
@@ -28,6 +35,11 @@ export const addPokemon = (uuid, pokemon) => {
   })
 }
 
+/**
+ * Set the team of the user
+ * @param {*} uuid
+ * @param {*} team
+ */
 export const setTeam = (uuid, team) => {
   return new Promise((resolve, reject) => {
     TeamModel.findOne({ userId: uuid }).exec()
@@ -41,6 +53,11 @@ export const setTeam = (uuid, team) => {
   })
 }
 
+/**
+ * Get the team of the user
+ * @param {*} uuid
+ * @returns {Promise<TeamModel.team>}
+ */
 export const getTeam = (uuid) => {
   return new Promise((resolve, reject) => {
     TeamModel.findOne({ userId: uuid }).exec()
@@ -51,6 +68,9 @@ export const getTeam = (uuid) => {
   })
 }
 
+/**
+ * Clean up all the teams
+ */
 export const cleanUpTeams = () => {
   return new Promise((resolve, reject) => {
     TeamModel.updateMany({}, { team: [] })
@@ -59,6 +79,11 @@ export const cleanUpTeams = () => {
   })
 }
 
+/**
+ * Remove a pokemon from the team
+ * @param {*} uuid
+ * @param {*} index
+ */
 export const removePokemon = (uuid, index) => {
   return new Promise((resolve, reject) => {
     TeamModel.findOne({ userId: uuid }).exec()

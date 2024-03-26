@@ -3,8 +3,11 @@ import { bootstrapTeam } from '../teams/teams.controller.js';
 import { hashPasswordSync, unHashPassword } from '../tools/crypto.js';
 import { UserModel } from './user.model.js';
 
-let userDatabase = {}
-
+/**
+ * Add a new user to the database
+ * @param {*} username
+ * @param {*} password
+ */
 export const addUser = (username, password) => new Promise((resolve, reject) => {
   const hashedPassword = hashPasswordSync(password);
   let userId = uuidv4();
@@ -20,18 +23,34 @@ export const addUser = (username, password) => new Promise((resolve, reject) => 
     .catch(err => reject(err));
 });
 
+/**
+ * Get a user from the database by userId
+ * @param {*} userId
+ * @returns {Promise<UserModel>}
+ */
 export const getUser = (userId) => new Promise((resolve, reject) => {
   UserModel.findOne({ userId }).exec()
     .then(result => resolve(result))
     .catch(err => reject(err));
 });
 
+/**
+ * Get a user from the database by username
+ * @param {*} userName
+ * @returns {Promise<UserModel>}
+ */
 export const getUserIdFromUserName = (userName) => new Promise((resolve, reject) => {
   UserModel.findOne({ username: userName }).exec()
     .then(result => resolve(result))
     .catch(err => reject(err));
 });
 
+/**
+ * Verify the user credentials
+ * @param {*} username
+ * @param {*} password
+ * @param {*} done
+ */
 export const verifyUserCredentials = async (username, password, done) => {
   let user = await getUserIdFromUserName(username)
 
@@ -43,6 +62,10 @@ export const verifyUserCredentials = async (username, password, done) => {
 
 }
 
+/**
+ * Clean up the users collection
+ * @returns {Promise<UserModel[]>}
+ */
 export const cleanUpUsers = () => new Promise((resolve, reject) => {
   UserModel.deleteMany({}).exec()
     .then(result => resolve(result))

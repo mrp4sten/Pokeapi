@@ -1,6 +1,11 @@
 import jsonwebtoken from "jsonwebtoken"
 import { getUserIdFromUserName, verifyUserCredentials } from "./users.controller.js"
 
+/**
+ * Login a user
+ * @param {*} req
+ * @param {*} res
+ */
 export const loginUser = (req, res) => {
   if (!req.body && !req.body.username || !req.body.password) {
     return res.status(400).json({ message: 'Bad Request' })
